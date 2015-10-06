@@ -4,7 +4,7 @@ AliDatatableBundle
 ### NOTE1 : v >= 2 only compatible with bootstrap.
 ### NOTE2 : v >= 2 some internal code changes were made, any code override of the v = 1.* will probably not be compatible with it.
 
-[![Build Status](https://secure.travis-ci.org/AliHichem/AliDatatableBundle.png?branch=master)](http://travis-ci.org/AliHichem/AliDatatableBundle) 
+[![Build Status](https://secure.travis-ci.org/AliHichem/AliDatatableBundle.png?branch=master)](http://travis-ci.org/AliHichem/AliDatatableBundle)
 <a href="https://codeclimate.com/github/AliHichem/AliDatatableBundle"><img src="https://codeclimate.com/github/AliHichem/AliDatatableBundle/badges/gpa.svg" /></a>
 [![GitHub issues](https://img.shields.io/github/issues/AliHichem/AliDatatableBundle.svg)](https://github.com/AliHichem/AliDatatableBundle/issues)
 [![GitHub forks](https://img.shields.io/github/forks/AliHichem/AliDatatableBundle.svg)](https://github.com/AliHichem/AliDatatableBundle/network)
@@ -18,7 +18,7 @@ This bundle provides a way to make a projection of a doctrine2 entity to a power
  * datatable service container: to manage the datatable as a service.
  * twig extension: for view integration.
  * dynamic pager handler : no need to set your pager.
- * default action link builder: if activated, the bundle generates default edit/delete links. 
+ * default action link builder: if activated, the bundle generates default edit/delete links.
  * support doctrine2 association.
  * support of doctrine query builder.
  * support of column search.
@@ -27,14 +27,14 @@ This bundle provides a way to make a projection of a doctrine2 entity to a power
 
 ### New in  v2:
  * datatable configuration javascript code (even for multiple datatables) is grouped, minimized and moved to the bottom of the html body element automatically.
- * twitter bootstrap integration. 
+ * twitter bootstrap integration.
 
 ###### Soon : support of ODM (MongoDB) : developement under progress in the "mongodb" branch.
 
 <div style="text-align:center"><img alt="Screenshot" src="https://github.com/AliHichem/AliDatatableBundle/raw/master/Resources/public/images/sample_01.png"></div>
 
 -------------------------------------
-##### [Installation](#installation-1) 
+##### [Installation](#installation-1)
 
 1. [Download AliDatatableBundle using composer](#step-1-download-alidatatablebundle)
 2. [Enable the Bundle](#step-2--enable-the-bundle)
@@ -46,9 +46,11 @@ This bundle provides a way to make a projection of a doctrine2 entity to a power
 ##### [Use of search filters](#-use-of-search-filters)
 
 *  [Activate search globally](#activate-search-globally)
-*  [Set search fields](#set-search-fields) (new) 
+*  [Set search fields](#set-search-fields) (new)
+*  [Use select inputs](#Use select inputs)
+*  [Place filters at top](#Place filters at top)
 
-##### [Multiple actions](#-multiple-actions) (new) 
+##### [Multiple actions](#-multiple-actions) (new)
 ##### [Custom renderer](#-custom-renderer)
 ##### [Translation](#-translation)
 ##### [Multiple datatable in the same view](#-multiple-datatable-in-the-same-view)
@@ -63,7 +65,7 @@ Installation is a quick (I promise!) 3 step process:
 2. [Enable the Bundle](#step-2--enable-the-bundle)
 3. [Configure your application's config.yml](#step-3--activate-the-main-configs)
 
-##### Step 1: Download AliDatatableBundle 
+##### Step 1: Download AliDatatableBundle
 
 ###### twitter bootstrapped (v >= 2.0)
 
@@ -133,7 +135,7 @@ $ app/console assets:install --symlink web
 
 in this section you can put the global config that you want to set for all the instance of datatable in your project.
 
-###### To keep it to default 
+###### To keep it to default
 
 ```
 # app/config/config.yml
@@ -145,11 +147,11 @@ ali_datatable:
 the "js" config will be applied to datatable exactly like you do with "$().datatable({ you config });" , you can even put javascript code.
 Note: all you js config have to string typed, make sure to use (") as delimiters.
 
-###### Config sample 
+###### Config sample
 
 ```
 ali_datatable:  
-    all: 
+    all:
         action:           true
         search:           false
     js:  
@@ -169,23 +171,23 @@ Assuming for example that you need a grid in your "index" action, create in your
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
 {
     return $this->get('datatable')
-                ->setEntityManager($em)                                         // Optional 
+                ->setEntityManager($em)                                         // Optional
                 ->setEntity("XXXMyBundle:Entity", "x")                          // Replace "XXXMyBundle:Entity" by your entity
                 ->setFields(
                         array(
-                            "Name"          => 'x.name',                        // Declaration for fields: 
+                            "Name"          => 'x.name',                        // Declaration for fields:
                             "Address"        => 'x.address',                    //      "label" => "alias.field_attribute_for_dql"
                             "_identifier_"  => 'x.id')                          // you have to put the identifier field without label. Do not replace the "_identifier_"
                         )
                 ->setWhere(                                                     // set your dql where statement
                      'x.address = :address',
-                     array('address' => 'Paris') 
+                     array('address' => 'Paris')
                 )
                 ->setOrder("x.created", "desc")                                 // it's also possible to set the default order
                 ->setHasAction(true);                                           // you can disable action column from here by setting "false".
@@ -218,10 +220,10 @@ public function indexAction()
 <!-- add these assets to your page or layout -->
 
 <!-- include the assets -->
-{% stylesheets 
+{% stylesheets
         'bundles/alidatatable/third-party/bootstrap/css/bootstrap.min.css'
         'bundles/alidatatable/css/dataTables.bootstrap.min.css'
-        filter='cssrewrite' 
+        filter='cssrewrite'
  %}
      <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
  {% endstylesheets %}
@@ -234,7 +236,7 @@ public function indexAction()
  {% endjavascripts %}
 
 
-{{ datatable({ 
+{{ datatable({
         'edit_route' : 'RouteForYourEntity_edit',
         'delete_route' : 'RouteForYourEntity_delete',
         'js' : {
@@ -255,7 +257,7 @@ Assuming the example above, you can add your joins and where statements
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
@@ -264,7 +266,7 @@ private function _datatable()
                 ->setEntity("XXXMyBundle:Entity", "x")                          // replace "XXXMyBundle:Entity" by your entity
                 ->setFields(
                         array(
-                            "Name"          => 'x.name',                        // Declaration for fields: 
+                            "Name"          => 'x.name',                        // Declaration for fields:
                             "Address"        => 'x.address',                    //      "label" => "alias.field_attribute_for_dql"
                             "Group"         => 'g.name',
                             "Team"          => 't.name',
@@ -274,7 +276,7 @@ private function _datatable()
                 ->addJoin('x.team', 't', \Doctrine\ORM\Query\Expr\Join::INNER_JOIN)
                 ->setWhere(                                                     // set your dql where statement
                      'x.address = :address',
-                     array('address' => 'Paris') 
+                     array('address' => 'Paris')
                 )
                 ->setOrder("x.created", "desc")                                 // it's also possible to set the default order
                 ->setHasAction(true);                                           // you can disable action column from here by setting "false".
@@ -286,6 +288,8 @@ private function _datatable()
 
 *  [Activate search globally](#activate-search-globally)
 *  [Set search fields](#set-search-fields)
+*  [Use select inputs](#Use select inputs)
+*  [Place filters at top](#Place filters at top)
 
 ###### Activate search globally
 
@@ -304,12 +308,12 @@ private function _datatable()
 ###### Set search fields
 
 You can set fields where you want to enable your search , by default search wont be active for actions column but you might want to disable search for other columns.
-Let say you want search to be active only for "field1" and "field3", you just need to activate search for the approriate column key and your datatable config should be : 
+Let say you want search to be active only for "field1" and "field3", you just need to activate search for the approriate column key and your datatable config should be :
 
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
@@ -329,6 +333,64 @@ private function _datatable()
 }
 ```
 
+###### Use select inputs (dropdowns) for filtering
+
+If you have a field with only a few values you can replace the text box with a dropdown (similar to the filtering in Excel) by specifying an array for the field index using setSearchDropdownValues. The key / value should be the same for now and may be updated to handle foreign keys in the future :
+
+```php
+/**
+ * set datatable configs
+ *
+ * @return \Ali\DatatableBundle\Util\Datatable
+ */
+private function _datatable()
+{
+    $datatable = $this->get('datatable');
+    return $datatable->setEntity("XXXMyBundle:Entity", "x")
+                    ->setFields(
+                            array(
+                                "label of field1" => 'x.field1',   // column key 0
+                                "label of field2" => 'x.field2',   // column key 1
+                                "label of field3" => 'x.field3',   // column key 2
+                                "_identifier_" => 'x.id')          // column key 3
+                    )
+                    ->setSearch(true)
+                    ->setSearchFields(array(0,2))
+                    ->setSearchDropdownValues(
+                     [
+                       2 => array( "" => "Search", "Field value" => "Field value", "Field value 2" => "Field value 2")
+                     ]
+    ;
+}
+```
+
+###### Place the filters at the top of the table
+
+To set the filters to display at the top use setSearchPosition('Header') (defaults to 'Footer') :
+
+```php
+/**
+ * set datatable configs
+ *
+ * @return \Ali\DatatableBundle\Util\Datatable
+ */
+private function _datatable()
+{
+    $datatable = $this->get('datatable');
+    return $datatable->setEntity("XXXMyBundle:Entity", "x")
+                    ->setFields(
+                            array(
+                                "label of field1" => 'x.field1',   // column key 0
+                                "label of field2" => 'x.field2',   // column key 1
+                                "label of field3" => 'x.field3',   // column key 2
+                                "_identifier_" => 'x.id')          // column key 3
+                    )
+                    ->setSearch(true)
+                    ->setSearchPosition('Header')
+    ;
+}
+```
+
 ### # Multiple actions
 
 Sometimes, it's good to be able to do the same action on multiple records like deleting, activating, moving ...
@@ -338,7 +400,7 @@ Well this is very easy to add to your datatable: all what you need is to declare
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
@@ -363,7 +425,7 @@ private function _datatable()
 }
 ```
 
-Then all what you have to do is to add the necessary logic in your "multiple_delete_route" (or whatever your route is for). 
+Then all what you have to do is to add the necessary logic in your "multiple_delete_route" (or whatever your route is for).
 In that action , you can get the selected ids by :
 
 ```php
@@ -380,7 +442,7 @@ To set your own column structure, you can use a custom twig renderer as below: I
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
@@ -426,7 +488,7 @@ Assuming the example above, you can set your custom fields renderer using [PHP C
 ```php
 /**
  * set datatable configs
- * 
+ *
  * @return \Ali\DatatableBundle\Util\Datatable
  */
 private function _datatable()
@@ -436,7 +498,7 @@ private function _datatable()
                 ->setEntity("XXXMyBundle:Entity", "x")                          // replace "XXXMyBundle:Entity" by your entity
                 ->setFields(
                         array(
-                            "Name"          => 'x.name',                        // Declaration for fields: 
+                            "Name"          => 'x.name',                        // Declaration for fields:
                             "Address"        => 'x.address',                    //      "label" => "alias.field_attribute_for_dql"
                             "_identifier_"  => 'x.id')                          // you have to put the identifier field without label. Do not replace the "_identifier_"
                         )
@@ -450,7 +512,7 @@ private function _datatable()
                                 $data[$key] = $controller_instance
                                         ->get('templating')
                                         ->render(
-                                               'XXXMyBundle:Module:_grid_entity.html.twig', 
+                                               'XXXMyBundle:Module:_grid_entity.html.twig',
                                                array('data' => $value)
                                         );
                             }
@@ -491,14 +553,14 @@ ali:
         sLast: "Last"
         search: "Search"
 ```
-   
-         
+
+
 This bundle includes nine translation catalogs: Arabic, Chinese, Dutch, English, Spanish, French, Italian, Russian and Turkish
 To get more translated entries, you can follow the [official datatable translation](http://datatables.net/plug-ins/i18n#English)
 
 ### # Doctrine query builder
 
-To use your own query object to supply to the datatable object, you can perform this action using your proper "doctrine query object": AliDatatableBundle allow (since tag 1.2.0) to manipulate the query object provider which is now a doctrine query builder object, you can use it to update the query in all its components except of course in the selected field part. 
+To use your own query object to supply to the datatable object, you can perform this action using your proper "doctrine query object": AliDatatableBundle allow (since tag 1.2.0) to manipulate the query object provider which is now a doctrine query builder object, you can use it to update the query in all its components except of course in the selected field part.
 
 This is a classic config before using the doctrine query builder:
 
@@ -518,9 +580,9 @@ private function _datatable()
                 )
                 ->setOrder("e.created", "desc");
 
-     $qb = $datatable->getQueryBuilder()->getDoctrineQueryBuilder(); 
-     // This is the doctrine query builder object , you can 
-     // retrieve it and include your own change 
+     $qb = $datatable->getQueryBuilder()->getDoctrineQueryBuilder();
+     // This is the doctrine query builder object , you can
+     // retrieve it and include your own change
 
      return $datatable;
 }
@@ -558,7 +620,7 @@ To declare multiple datatables in the same view, you have to set the datatable i
 
 
 ```php
-protected function _datatable() 
+protected function _datatable()
 {
     // ...
     return $this->get('datatable')
@@ -567,7 +629,7 @@ protected function _datatable()
     // ...
 }
 
-protected function _datatableSecond() 
+protected function _datatableSecond()
 {
     // ...
     return $this->get('datatable')
@@ -580,23 +642,23 @@ protected function _datatableSecond()
 **In the view**
 
 ```js
-{{ 
-    datatable({ 
+{{
+    datatable({
         'id' : 'dta-unique-id_1',
         ...
             'js' : {
             'sAjaxSource' : path('RouteForYour_grid_action_1')
             }
-    }) 
+    })
 }}
 
-{{ 
-    datatable({ 
+{{
+    datatable({
         'id' : 'dta-unique-id_2',
         ...
         'js' : {
             'sAjaxSource' : path('RouteForYour_grid_action_2')
         }
-    }) 
+    })
 }}
 ```

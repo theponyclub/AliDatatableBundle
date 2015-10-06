@@ -13,9 +13,9 @@ class AliDatatableExtension extends \Twig_Extension
     protected $_container;
 
     /**
-     * class constructor 
-     * 
-     * @param ContainerInterface $container 
+     * class constructor
+     *
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -34,9 +34,9 @@ class AliDatatableExtension extends \Twig_Extension
 
     /**
      * Converts a string to time
-     * 
+     *
      * @param string $string
-     * @return int 
+     * @return int
      */
     public function datatable($options)
     {
@@ -44,18 +44,20 @@ class AliDatatableExtension extends \Twig_Extension
         {
             $options['id'] = 'ali-dta_' . md5(rand(1, 100));
         }
-        $dt                       = Datatable::getInstance($options['id']);
-        $config                   = $dt->getConfiguration();
-        $options['js_conf']       = json_encode($config['js']);
-        $options['js']            = json_encode($options['js']);
-        $options['action']        = $dt->getHasAction();
-        $options['action_twig']   = $dt->getHasRendererAction();
-        $options['fields']        = $dt->getFields();
-        $options['delete_form']   = $this->createDeleteForm('_id_')->createView();
-        $options['search']        = $dt->getSearch();
-        $options['search_fields'] = $dt->getSearchFields();
-        $options['multiple']      = $dt->getMultiple();
-        $options['sort']          = is_null($dt->getOrderField()) ? NULL : array(array_search(
+        $dt                                 = Datatable::getInstance($options['id']);
+        $config                             = $dt->getConfiguration();
+        $options['js_conf']                 = json_encode($config['js']);
+        $options['js']                      = json_encode($options['js']);
+        $options['action']                  = $dt->getHasAction();
+        $options['action_twig']             = $dt->getHasRendererAction();
+        $options['fields']                  = $dt->getFields();
+        $options['delete_form']             = $this->createDeleteForm('_id_')->createView();
+        $options['search']                  = $dt->getSearch();
+        $options['search_fields']           = $dt->getSearchFields();
+        $options['search_dropdown_values']  = $dt->getSearchDropdownValues();
+        $options['search_position']         = $dt->getSearchPosition();
+        $options['multiple']                = $dt->getMultiple();
+        $options['sort']                    = is_null($dt->getOrderField()) ? NULL : array(array_search(
                     $dt->getOrderField(), array_values($dt->getFields())), $dt->getOrderType());
         $main_template            = 'AliDatatableBundle:Main:index.html.twig';
         if (isset($options['main_template']))
@@ -77,9 +79,9 @@ class AliDatatableExtension extends \Twig_Extension
 
     /**
      * create delete form
-     * 
+     *
      * @param type $id
-     * @return type 
+     * @return type
      */
     private function createDeleteForm($id)
     {
@@ -90,10 +92,10 @@ class AliDatatableExtension extends \Twig_Extension
 
     /**
      * create form builder
-     * 
+     *
      * @param type $data
      * @param array $options
-     * @return type 
+     * @return type
      */
     public function createFormBuilder($data = null, array $options = array())
     {

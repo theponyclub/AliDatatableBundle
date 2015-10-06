@@ -21,9 +21,9 @@ $(document).ready(function(){
     {% endif %}
     var $js_conf = {{ js_conf | raw }};
     var $js = {};
-    for(key in $js_conf) { 
+    for(key in $js_conf) {
         if ($js_conf.hasOwnProperty(key)) {
-            eval ( ' $js["'+key+'"] = ' + $js_conf[key]+ ' ; ' ); 
+            eval ( ' $js["'+key+'"] = ' + $js_conf[key]+ ' ; ' );
         }
     }
     var $options = {{ js | raw }};
@@ -44,7 +44,7 @@ $(document).ready(function(){
     {% if multiple %}
     $aoColumnDefs.push({ 'bSortable': false, 'aTargets': [ 0 ] });
     {% endif %}
-    {% if action and not action_twig %} 
+    {% if action and not action_twig %}
     $aoColumnDefs.push({
         "mRender": function ( data, type, full ) {
             var $edit_url = "{{ path(edit_route , { 'id': "xx" }) }}".replace("xx", data);
@@ -65,7 +65,7 @@ $(document).ready(function(){
         },
         "aTargets": [ multiple ? {{fields|length}} : ({{fields|length}} -1)  ]
     });
-    {% endif %} 
+    {% endif %}
     var $defaults = {
         "bJQueryUI": false,
         "sPaginationType": "full_numbers",
@@ -86,6 +86,7 @@ $(document).ready(function(){
                 $(s+' .dataTables_length').prepend(multiple_rawhtml);
             }
         },
+        "orderCellsTop": {% if search == 'Header' %} true {% else %} false {% endif %},
         "bSort": true,
         "bFilter": {% if search %} true {% else %} false {% endif %},
         "oLanguage": {
@@ -119,7 +120,7 @@ $(document).ready(function(){
         $(this).parents('form:eq(0)').submit();
     });
 
-    if (multiple===true) { 
+    if (multiple===true) {
         var chbox =  'input:checkbox[name="dataTables[actions][]"]';
         var chbox_all = 'input:checkbox[name="datatable_action_all"]';
         $(s).on('click','.btn-datatable-multiple:not(.search_init)',function(e){
@@ -166,19 +167,32 @@ $(document).ready(function(){
 
     {% if search %}
     $(".dataTables_filter").remove();
-    var search_selector = "#{{id}} input[searchable=true]";
+    var search_selector = "#{{id}} :input[searchable=true]";
     $(search_selector).keypress( function (event) {
         var index = $(this).attr('index');
         var oTable = eval('oTable_{{id}}'.split('-').join('_'));
         if (event.keyCode == '13') {
-            oTable.fnFilter( 
-                this.value, 
-                oTable.oApi._fnVisibleToColumnIndex( 
-                    oTable.fnSettings(), 
-                    index 
-                ) 
+            oTable.fnFilter(
+                this.value,
+                oTable.oApi._fnVisibleToColumnIndex(
+                    oTable.fnSettings(),
+                    index
+                )
             );
         }
+    }).change( function (event) {
+      console.log(event.target);
+      var index = $(this).attr('index');
+      var oTable = eval('oTable_{{id}}'.split('-').join('_'));
+
+      oTable.fnFilter(
+          this.value,
+          oTable.oApi._fnVisibleToColumnIndex(
+              oTable.fnSettings(),
+              index
+          )
+      );
+
     }).each( function (i) {
         this.initVal = this.value;
     }).focus( function () {
