@@ -29,6 +29,8 @@
             {% endif %}
         {% elseif label == '_identifier_'and action and not action_twig %}
             <td></td>
+            {% else %}
+            <td></td>
         {% endif %}
         {% set i = i+1 %}
     {% endfor %}
