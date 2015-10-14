@@ -1,14 +1,14 @@
 <tr>
     {% if multiple %}
-    <th></th>
+      <th></th>
     {% endif %}
     {% for label,key in fields %}
         {% if label != '_identifier_' %}
             {% if search_fields is not empty %}
                 {% if i in search_fields %}
-                <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
+                  <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
                 {% else %}
-                <td></td>
+                  <td></td>
                 {% endif %}
             {% else %}
               {% if search_dropdown_values is not empty %}
@@ -24,12 +24,12 @@
                   <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
                 {% endif %}
               {% else %}
-              <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
+                  <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
               {% endif %}
             {% endif %}
         {% elseif label == '_identifier_'and action and not action_twig %}
             <td></td>
-            {% else %}
+        {% elseif label == '_identifier_'and action %}
             <td></td>
         {% endif %}
         {% set i = i+1 %}
