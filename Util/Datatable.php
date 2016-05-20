@@ -23,10 +23,7 @@ class Datatable
 
     /** @var \Symfony\Component\DependencyInjection\ContainerInterface */
     protected $_container;
-//
-//    /** @var \Doctrine\ORM\EntityManager */
-//    protected $_em;
-
+    
     /** @var boolean */
     protected $_has_action;
 
