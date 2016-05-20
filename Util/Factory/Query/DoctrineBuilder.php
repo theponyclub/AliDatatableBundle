@@ -172,7 +172,7 @@ class DoctrineBuilder implements QueryInterface
      * 
      * @return array 
      */
-    public function getData($hydration_mode)
+    public function getData($hydration_mode, $multiple)
     {
         $request    = $this->request;
         $dql_fields = array_values($this->fields);
@@ -180,7 +180,13 @@ class DoctrineBuilder implements QueryInterface
         // add sorting
         if ($request->get('iSortCol_0') != null)
         {
-            $order_field = current(explode(' as ', $dql_fields[$request->get('iSortCol_0')]));
+
+            $sortColumnIndex = $request->get('iSortCol_0');
+            //fix for wrong sort column index (not taking into account multiple checkboxes first column)
+            if ($multiple && $sortColumnIndex != '0') {
+                $sortColumnIndex--;
+            }
+            $order_field = current(explode(' as ', $dql_fields[$sortColumnIndex]));
         }
         else
         {
