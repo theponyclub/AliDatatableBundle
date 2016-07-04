@@ -181,10 +181,8 @@ $(document).ready(function(){
             );
         }
     }).change( function (event) {
-      console.log(event.target);
       var index = $(this).attr('index');
       var oTable = eval('oTable_{{id}}'.split('-').join('_'));
-
       oTable.fnFilter(
           this.value,
           oTable.oApi._fnVisibleToColumnIndex(
@@ -207,4 +205,12 @@ $(document).ready(function(){
         }
     });
     {% endif %}
+
+$(s)
+    .on('preXhr.dt', function ( e, settings, data ) {
+        $('[name ^="multi"]').each(function(){
+            var input = $(this);
+            data[input.attr('name')] = input.val();
+        });
+    } )
 });

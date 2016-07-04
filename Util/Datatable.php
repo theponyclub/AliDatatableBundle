@@ -66,6 +66,9 @@ class Datatable
     /** @var array */
     protected $_search_dropdown_values = array();
 
+    /** @var array */
+    protected $_search_range_values = array();
+
     /**
      * class constructor
      *
@@ -636,6 +639,16 @@ class Datatable
     }
 
     /**
+     * get list of custom values for search filter ranges
+     *
+     * @return array
+     */
+    public function getSearchRangeValues()
+    {
+        return $this->_search_range_values;
+    }
+
+    /**
      * set search fields
      *
      * @example
@@ -649,6 +662,23 @@ class Datatable
     public function setSearchDropdownValues(array $_search_dropdown_values)
     {
         $this->_search_dropdown_values = $_search_dropdown_values;
+        return $this;
+    }
+
+    /**
+     * set search range fields
+     *
+     * @example
+     *
+     *      ->setSearchRangeValues(array(0,2,5))
+     *
+     * @param array $search_range_values
+     *
+     * @return \Ali\DatatableBundle\Util\Datatable
+     */
+    public function setSearchRangeValues(array $_search_range_values)
+    {
+        $this->_search_range_values = $_search_range_values;
         return $this;
     }
 

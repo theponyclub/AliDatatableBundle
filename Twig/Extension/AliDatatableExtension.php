@@ -55,6 +55,7 @@ class AliDatatableExtension extends \Twig_Extension
         $options['search']                  = $dt->getSearch();
         $options['search_fields']           = $dt->getSearchFields();
         $options['search_dropdown_values']  = $dt->getSearchDropdownValues();
+        $options['search_range_values']     = $dt->getSearchRangeValues();
         $options['search_position']         = $dt->getSearchPosition();
         $options['multiple']                = $dt->getMultiple();
         $options['sort']                    = is_null($dt->getOrderField()) ? NULL : array(array_search(
