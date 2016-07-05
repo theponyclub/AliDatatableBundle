@@ -183,7 +183,8 @@ class DoctrineBuilder implements QueryInterface
 
             $sortColumnIndex = $request->get('iSortCol_0');
             //fix for wrong sort column index (not taking into account multiple checkboxes first column)
-            if ($multiple && $sortColumnIndex != '0') {
+            //$request->get('sEcho') added to fix different sorting on grid load
+            if ($multiple && $sortColumnIndex != '0' && $request->get('sEcho') > 1) {
                 $sortColumnIndex--;
             }
             $order_field = current(explode(' as ', $dql_fields[$sortColumnIndex]));
