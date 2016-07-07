@@ -208,9 +208,11 @@ $(document).ready(function(){
 
 $(s)
     .on('preXhr.dt', function ( e, settings, data ) {
-        $('[name ^="multi"]').each(function(){
+        $('.multi').each(function(){
             var input = $(this);
-            data[input.attr('name')] = input.val();
+            if(input.val()) {
+                data[input.attr('name')] = input.val();
+            }
         });
     } )
 });

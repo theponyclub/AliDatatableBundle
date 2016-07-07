@@ -14,7 +14,7 @@
               {% if search_dropdown_values is not empty %}
                 {% if attribute(search_dropdown_values, i) is defined %}
                   <td>
-                      {% if attribute(search_range_values, i) is defined %}
+                      {% if i in search_range_values %}
                           From: <br>
                           <select class="form-control" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][0]">
                               {% for optKey, optValue in search_dropdown_values[i] %}
@@ -41,12 +41,12 @@
                 {% endif %}
               {% else %}
                   <td>
-                      {% if attribute(search_range_values, i) is defined %}
+                      {% if i in search_range_values %}
                           From: <br>
-                          <input index="{{i}}" name="multi[{{i}}][0]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
+                          <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
                           <br>
                           To: <br>
-                          <input index="{{i}}" name="multi[{{i}}][1]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
+                          <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
                       {% else %}
                           <input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
                       {% endif %}
