@@ -16,14 +16,14 @@
                   <td>
                       {% if i in search_range_values %}
                           From: <br>
-                          <select class="form-control" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][0]">
+                          <select class="form-control multi" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][from]">
                               {% for optKey, optValue in search_dropdown_values[i] %}
                                   <option value="{{optKey}}">{{optValue}}</option>
                               {% endfor %}
                           </select>
                           <br>
                           To: <br>
-                          <select class="form-control" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][1]">
+                          <select class="form-control multi" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][to]">
                               {% for optKey, optValue in search_dropdown_values[i] %}
                                   <option value="{{optKey}}">{{optValue}}</option>
                               {% endfor %}
@@ -37,7 +37,17 @@
                       {% endif %}
                   </td>
                 {% else %}
-                  <td><input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" /></td>
+                  <td>
+                      {% if i in search_range_values %}
+                          From: <br>
+                          <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
+                          <br>
+                          To: <br>
+                          <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
+                      {% else %}
+                          <input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
+                      {% endif %}
+                  </td>
                 {% endif %}
               {% else %}
                   <td>
