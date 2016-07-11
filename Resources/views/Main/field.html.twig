@@ -1,0 +1,19 @@
+<td>
+    {% if attribute(search_range_values, i) is defined %}
+        {% if search_range_values[i] == 'date' %}
+            From: <br>
+            <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi b-datepicker" data-mask="99-99-9999" />
+            <br>
+            To: <br>
+            <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi b-datepicker" data-mask="99-99-9999" />
+        {% else %}
+            From: <br>
+            <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
+            <br>
+            To: <br>
+            <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
+        {% endif %}
+    {% else %}
+        <input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
+    {% endif %}
+</td>

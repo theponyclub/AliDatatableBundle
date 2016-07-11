@@ -37,30 +37,10 @@
                       {% endif %}
                   </td>
                 {% else %}
-                  <td>
-                      {% if i in search_range_values %}
-                          From: <br>
-                          <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
-                          <br>
-                          To: <br>
-                          <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
-                      {% else %}
-                          <input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
-                      {% endif %}
-                  </td>
+                    {% include 'AliDatatableBundle:Main:field.html.twig' %}
                 {% endif %}
               {% else %}
-                  <td>
-                      {% if i in search_range_values %}
-                          From: <br>
-                          <input index="{{i}}" name="multi[{{i}}][from]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
-                          <br>
-                          To: <br>
-                          <input index="{{i}}" name="multi[{{i}}][to]" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm multi" />
-                      {% else %}
-                          <input index="{{i}}" searchable="true" type="text" placeholder="{{ 'ali.common.search'|trans() }}" class="search_init form-control input-sm" />
-                      {% endif %}
-                  </td>
+                  {% include 'AliDatatableBundle:Main:field.html.twig' %}
               {% endif %}
             {% endif %}
         {% elseif label == '_identifier_'and action and not action_twig %}
