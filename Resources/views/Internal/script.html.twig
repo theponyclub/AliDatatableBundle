@@ -195,12 +195,14 @@ $(document).ready(function(){
         this.initVal = this.value;
     }).focus( function () {
         if ( this.className == "search_init" ){
-            this.className = "";
+            {#this.className = "";#}
+            $(this).removeClass('search_init');
             this.value = "";
         }
     }).blur( function (i) {
         if ( this.value == "" ){
-            this.className = "search_init";
+            {#this.className = "search_init";#}
+            $(this).addClass('search_init');
             this.value = this.initVal;
         }
     });
