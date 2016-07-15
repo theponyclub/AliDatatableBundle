@@ -14,7 +14,7 @@
               {% if search_dropdown_values is not empty %}
                 {% if attribute(search_dropdown_values, i) is defined %}
                   <td>
-                      {% if i in search_range_values %}
+                      {% if attribute(search_range_values, i) is defined %}
                           From: <br>
                           <select class="form-control multi" index="{{i}}" searchable="true" placeholder="{{ 'ali.common.search'|trans() }}" name="multi[{{i}}][from]">
                               {% for optKey, optValue in search_dropdown_values[i] %}
