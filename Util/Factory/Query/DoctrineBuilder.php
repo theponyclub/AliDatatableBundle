@@ -155,13 +155,13 @@ class DoctrineBuilder implements QueryInterface
         if (empty($gb) || !in_array($this->fields['_identifier_'], $gb))
         {
             $qb->select(" count({$this->fields['_identifier_']}) ");
-            return $qb->getQuery()->getSingleScalarResult();
+            return $qb->getQuery()->getOneOrNullResult();
         }
         else
         {
             $qb->resetDQLPart('groupBy');
             $qb->select(" count(distinct {$this->fields['_identifier_']}) ");
-            return $qb->getQuery()->getSingleScalarResult();
+            return $qb->getQuery()->getOneOrNullResult();
         }
     }
 
