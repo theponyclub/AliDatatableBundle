@@ -150,7 +150,6 @@ class DoctrineBuilder implements QueryInterface
         $qb = clone $this->queryBuilder;
         $this->_addSearch($qb);
         $qb->resetDQLPart('orderBy');
-//        $qb->resetDQLPart('having');
 
         $gb = $qb->getDQLPart('groupBy');
         if (empty($gb) || !in_array($this->fields['_identifier_'], $gb))
