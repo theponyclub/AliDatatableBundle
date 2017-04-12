@@ -150,18 +150,23 @@ class DoctrineBuilder implements QueryInterface
         $qb = clone $this->queryBuilder;
         $this->_addSearch($qb);
         $qb->resetDQLPart('orderBy');
+//        $qb->resetDQLPart('having');
 
         $gb = $qb->getDQLPart('groupBy');
         if (empty($gb) || !in_array($this->fields['_identifier_'], $gb))
         {
             $qb->select(" count({$this->fields['_identifier_']}) ");
-            return $qb->getQuery()->getOneOrNullResult();
+
+            $result = $qb->getQuery()->getOneOrNullResult();
+            return $result ? $result[1] : 0;
         }
         else
         {
             $qb->resetDQLPart('groupBy');
             $qb->select(" count(distinct {$this->fields['_identifier_']}) ");
-            return $qb->getQuery()->getOneOrNullResult();
+
+            $result = $qb->getQuery()->getOneOrNullResult();
+            return $result ? $result[1] : 0;
         }
     }
 
